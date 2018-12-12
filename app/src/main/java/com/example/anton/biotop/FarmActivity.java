@@ -24,10 +24,9 @@ public class FarmActivity extends AppCompatActivity {
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
         status = (TextView) findViewById(R.id.wateringStatusShow);
-
         auto = (Switch) findViewById(R.id.autoSwitch);
-
         statusButton = findViewById(R.id.waterButton);
+
         statusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
