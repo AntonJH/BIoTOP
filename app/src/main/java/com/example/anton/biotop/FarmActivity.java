@@ -11,11 +11,12 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class FarmActivity extends AppCompatActivity {
-    Button statusButton;
+    Button statusButton, upButton, downButton;
     TextView moistureValue;
     TextView status;
     Switch auto;
     boolean watering = false;
+    int n = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,31 +24,46 @@ public class FarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_farm);
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
-        status = (TextView) findViewById(R.id.wateringStatusShow);
-        auto = (Switch) findViewById(R.id.autoSwitch);
+        status = findViewById(R.id.wateringStatusShow);
+        auto = findViewById(R.id.autoSwitch);
         statusButton = findViewById(R.id.waterButton);
+        upButton = findViewById(R.id.buttonUp);
+        downButton = findViewById(R.id.buttonDown);
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                n++;
+                moistureValue.setText(n + "");
+                checkMoist();
+            }
+        });
+
+        downButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                n--;
+                moistureValue.setText(n + "");
+                checkMoist();
+            }
+        });
 
         statusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!watering) {
                     Random rand = new Random();
-                    int n = rand.nextInt(50) + 1;
-                    if (n > 25) {
-                        auto.setChecked(false);
-                    } else{
-                        auto.setChecked(true);
-                    }
+                    n = rand.nextInt(50) + 1;
+                    checkMoist();
 
-                    moistureValue.setText(n+"");
-                    status.setText("On");
-                    statusButton.setText("Avbryt");
+                    moistureValue.setText(n + "");
+                    status.setText(R.string.txv_watering_status_show_on);
+                    statusButton.setText(R.string.txv_watering_button_show_off);
                     watering = true;
-                }
-                else {
+                } else {
                     moistureValue.setText("8");
-                    status.setText("Off");
-                    statusButton.setText("Starta");
+                    status.setText(R.string.txv_watering_status_show_off);
+                    statusButton.setText(R.string.txv_watering_button_show_off);
                     watering = false;
                 }
             }
@@ -62,5 +78,13 @@ public class FarmActivity extends AppCompatActivity {
                     statusButton.setEnabled(false);
             }
         });
+    }
+
+    void checkMoist(){
+        if (n > 25) {
+            auto.setChecked(false);
+        } else {
+            auto.setChecked(true);
+        }
     }
 }
