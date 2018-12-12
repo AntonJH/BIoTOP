@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BIoTOP</string>
+    <string name="txv_farm">Odling</string>
+    <string name="txv_animal">Djur</string>
+    <string name="txv_moisture">Fukthalt:</string>
+    <string name="txv_moisture_show">fukt</string>
+    <string name="txv_temperature">Temperatur:</string>
+    <string name="txv_temperature_show">temp</string>
+    <string name="txv_watering_title">Besprutning</string>
+    <string name="txv_watering_option">Automatisk besprutning</string>
+    <string name="txv_watering_status">Status</string>
+    <string name="txv_watering_status_show_off">Off</string>
+    <string name="txv_watering_status_show_on">On</string>
+    <string name="txv_watering_button_show_off">Starta</string>
+    <string name="txv_watering_button_show_on">Avbryt</string>
+</resources>
