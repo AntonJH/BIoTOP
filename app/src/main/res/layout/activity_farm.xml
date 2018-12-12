@@ -26,6 +26,7 @@
             android:id="@+id/moisture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="1dp"
             android:padding="5dip"
@@ -56,6 +57,7 @@
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="15dp"
             android:padding="5dip"
@@ -96,6 +98,7 @@
             android:id="@+id/wateringOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="1dp"
             android:padding="5dip"
@@ -107,6 +110,7 @@
             android:id="@+id/autoSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
             android:layout_marginLeft="160dp" />
 
     </LinearLayout>
@@ -121,6 +125,7 @@
             android:id="@+id/wateringStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="1dp"
             android:padding="5dip"
@@ -132,6 +137,7 @@
             android:id="@+id/wateringStatusShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
             android:layout_marginLeft="200dp"
             android:padding="5dip"
             android:text="@string/txv_watering_status_show_off"
@@ -144,7 +150,8 @@
         android:id="@+id/waterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
         android:text="@string/txv_watering_button_show_off" />
 
 </LinearLayout>
