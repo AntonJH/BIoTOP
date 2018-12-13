@@ -33,7 +33,7 @@ public class FarmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 n++;
                 moistureValue.setText(n + "");
-                checkMoist();
+                checkMoisture();
             }
         });
 
@@ -42,18 +42,19 @@ public class FarmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 n--;
                 moistureValue.setText(n + "");
-                checkMoist();
+                checkMoisture();
             }
         });
 
         statusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!watering) {
+                if (!watering)
                     startWatering(true);
-                } else {
+                else
                     startWatering(false);
-                }
+                if (auto.isChecked())
+                    auto.setChecked(false);
             }
         });
 /*
@@ -84,7 +85,7 @@ public class FarmActivity extends AppCompatActivity {
         }
     }
 
-    void checkMoist() {
+    void checkMoisture() {
         if (auto.isChecked()) {
             if (n < 10)
                 startWatering(true);
