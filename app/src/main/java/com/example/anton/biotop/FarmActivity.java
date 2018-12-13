@@ -8,8 +8,6 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.Random;
-
 public class FarmActivity extends AppCompatActivity {
     Button statusButton, upButton, downButton;
     TextView moistureValue;
@@ -52,39 +50,46 @@ public class FarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!watering) {
-                    Random rand = new Random();
-                    n = rand.nextInt(50) + 1;
-                    checkMoist();
-
-                    moistureValue.setText(n + "");
-                    status.setText(R.string.txv_watering_status_show_on);
-                    statusButton.setText(R.string.txv_watering_button_show_off);
-                    watering = true;
+                    startWatering(true);
                 } else {
-                    moistureValue.setText("8");
-                    status.setText(R.string.txv_watering_status_show_off);
-                    statusButton.setText(R.string.txv_watering_button_show_off);
-                    watering = false;
+                    startWatering(false);
                 }
             }
         });
-
+/*
         auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked)
-                    statusButton.setEnabled(true);
-                else
-                    statusButton.setEnabled(false);
+                if (isChecked) {
+                    upButton.setEnabled(true);
+                    downButton.setEnabled(true);
+                } else {
+                    upButton.setEnabled(false);
+                    downButton.setEnabled(false);
+                }
             }
         });
+*/
     }
 
-    void checkMoist(){
-        if (n > 25) {
-            auto.setChecked(false);
+    void startWatering(boolean b) {
+        if (b) {
+            watering = true;
+            status.setText(R.string.txv_watering_status_show_on);
+            statusButton.setText(R.string.txv_watering_button_show_on);
         } else {
-            auto.setChecked(true);
+            watering = false;
+            status.setText(R.string.txv_watering_status_show_off);
+            statusButton.setText(R.string.txv_watering_button_show_off);
+        }
+    }
+
+    void checkMoist() {
+        if (auto.isChecked()) {
+            if (n < 10)
+                startWatering(true);
+            else
+                startWatering(false);
         }
     }
 }
