@@ -7,23 +7,22 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.buttonFarm);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonFarm = (Button) findViewById(R.id.buttonFarm);
+        buttonFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFarmActivity();
             }
         });
 
-        button = (Button) findViewById(R.id.buttonAnimal);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button  buttonAnimal = (Button) findViewById(R.id.buttonAnimal);
+        buttonAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openAnimalActivity();

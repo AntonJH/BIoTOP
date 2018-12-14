@@ -3,16 +3,17 @@
     <string name="txv_farm">Odling</string>
     <string name="txv_values">Värden</string>
     <string name="txv_moisture">Fukthalt:</string>
-    <string name="txv_moisture_show">fukt</string>
+    <string name="txv_moisture_show">-- --</string>
     <string name="txv_temperature">Temperatur:</string>
-    <string name="txv_temperature_show">temp</string>
+    <string name="txv_temperature_show">-- --</string>
     <string name="txv_watering_title">Besprutning</string>
-    <string name="txv_watering_option">Automatisk:</string>
+    <string name="txv_watering_option">Automatisk</string>
     <string name="txv_watering_status">Status:</string>
     <string name="txv_watering_status_show_off">Off</string>
     <string name="txv_watering_status_show_on">On</string>
     <string name="txv_watering_button_show_off">Starta</string>
     <string name="txv_watering_button_show_on">Avbryt</string>
     <string name="txv_animal">Djur</string>
+    <string name="txv_position">Position</string>
     <string name="txv_health">Hälsa</string>
 </resources>
