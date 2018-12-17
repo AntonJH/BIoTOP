@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008512</color>
-    <color name="colorPrimaryDark">#00570c</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="black_alpha">#000000</color>
+    <color name="green">#008512</color>
+    <color name="greenDark">#00570c</color>
+    <color name="orange">#dc7516</color>
+    <color name="black">#000000</color>
     <color name="text_box_background">#E7E7E7</color>
-    <color name="blue_text">#0166ff</color>
-    <color name="title_bar_color">#EB164E</color>
+    <color name="blue">#0166ff</color>
+    <color name="red">#EB164E</color>
     <color name="activitybackground">#ccf0f0</color>
     <color name="activityfont">#3f3f3f</color>
 

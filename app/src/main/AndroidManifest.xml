@@ -16,12 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FarmActivity"
-            android:label="@string/txv_farm"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".AnimalActivity"
-            android:label="@string/txv_animal"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".FarmActivity"
+            android:label="@string/tv_farm"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AnimalActivity"
+            android:label="@string/tv_animal"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AnimalHealthActivity"></activity>
     </application>
 
 </manifest>

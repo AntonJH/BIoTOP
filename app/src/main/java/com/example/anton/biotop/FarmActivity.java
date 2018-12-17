@@ -22,7 +22,7 @@ public class FarmActivity extends AppCompatActivity {
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
         status = findViewById(R.id.wateringStatusShow);
-        auto = findViewById(R.id.autoSwitch);
+        auto = findViewById(R.id.automaticSwitch);
         statusButton = findViewById(R.id.waterButton);
         upButton = findViewById(R.id.buttonUp);
         downButton = findViewById(R.id.buttonDown);
@@ -75,12 +75,12 @@ public class FarmActivity extends AppCompatActivity {
     void startWatering(boolean b) {
         if (b) {
             watering = true;
-            status.setText(R.string.txv_watering_status_show_on);
-            statusButton.setText(R.string.txv_watering_button_show_on);
+            status.setText(R.string.tv_watering_status_show_on);
+            statusButton.setText(R.string.tv_watering_button_show_on);
         } else {
             watering = false;
-            status.setText(R.string.txv_watering_status_show_off);
-            statusButton.setText(R.string.txv_watering_button_show_off);
+            status.setText(R.string.tv_watering_status_show_off);
+            statusButton.setText(R.string.tv_watering_button_show_off);
         }
     }
 
