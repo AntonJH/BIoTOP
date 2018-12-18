@@ -24,10 +24,27 @@ public class FarmActivity extends AppCompatActivity {
     Switch autoSwitch;
     boolean watering = false;
     int n = 0;
+    String test;
+
+    /*
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("temp", test);
+        super.onSaveInstanceState(outState);
+    }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+        if (savedInstanceState != null) {
+            test = savedInstanceState.getString("temp");
+            temperatureValue.setText(test);
+        }
+
+        */
         setContentView(R.layout.activity_farm);
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
@@ -82,10 +99,10 @@ public class FarmActivity extends AppCompatActivity {
         });
 */
 
-        new AsyncTask<Integer, Void, String>() {
+        new AsyncTask<Integer, Integer, String>() {
+
             @Override
             protected String doInBackground(Integer... params) {
-                StringBuilder strBuild = run("tdtool -l");
 
                 /*
                 String[] tempData = strBuild.toString().trim().split("\\n");
@@ -98,8 +115,30 @@ public class FarmActivity extends AppCompatActivity {
 
                 return temperatur;
                 */
-                String test = strBuild.toString();
+
+                int i = 0;
+                while (i <= 50) {
+                    test = run("./iot_project/test.py");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    publishProgress(i);
+                }
+
+                System.out.println(test);
                 return test;
+            }
+
+
+
+            @Override
+            protected void onProgressUpdate(Integer...  values) {
+               // super.onProgressUpdate(values);
+                temperatureValue.setText(test);
+                System.out.println(test);
+
             }
 
             protected void onPostExecute(String result) {
@@ -107,7 +146,9 @@ public class FarmActivity extends AppCompatActivity {
             }
 
         }.execute(1);
+
     }
+
 
     void startWatering(boolean b) {
         if (b) {
@@ -146,10 +187,11 @@ public class FarmActivity extends AppCompatActivity {
         }
     }
 
-    public StringBuilder run(String command) {
-        StringBuilder strBuild = new StringBuilder();
+    public String run(String command) {
+       // String strBuild = new StringBuilder();
+        String strBuild = "";
 
-        String hostname = "192.168.137.78";
+        String hostname = "169.254.224.24";
         String username = "pi";
         String password = "raspberry";
 
@@ -167,6 +209,7 @@ public class FarmActivity extends AppCompatActivity {
             InputStream stdout = new StreamGobbler(ses.getStdout());
             BufferedReader br = new BufferedReader(new InputStreamReader(stdout)); //reads text
 
+            /*
             while (true) {
                 String line = br.readLine(); // read line
                 if (line == null)
@@ -174,6 +217,8 @@ public class FarmActivity extends AppCompatActivity {
                 strBuild.append(line + "\n");
                 System.out.println(line);
             }
+            */
+            strBuild = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
             ses.close(); // Close this session
