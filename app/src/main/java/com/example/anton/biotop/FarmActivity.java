@@ -19,12 +19,17 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
 public class FarmActivity extends AppCompatActivity {
-    TextView moistureValue, temperatureValue, status;
+    TextView moistureValue, temperatureValue, phValue, status;
     Button statusButton, upButton, downButton;
     Switch autoSwitch;
     boolean watering = false;
     int n = 0;
-    String test;
+
+    String moist;
+    String temp;
+    String ph;
+
+    private static final String RPI_SCRIPT_PATH = "./iot_project/test.py ";
 
     /*
     @Override
@@ -49,6 +54,7 @@ public class FarmActivity extends AppCompatActivity {
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
         temperatureValue = (TextView) findViewById(R.id.temperatureShow);
+        phValue = (TextView) findViewById(R.id.phShow);
         status = (TextView) findViewById(R.id.wateringStatusShow);
         autoSwitch = (Switch) findViewById(R.id.automaticSwitch);
         statusButton = (Button) findViewById(R.id.waterButton);
@@ -99,7 +105,9 @@ public class FarmActivity extends AppCompatActivity {
         });
 */
 
-        new AsyncTask<Integer, Integer, String>() {
+        AsyncTask<Integer, Integer, String> sensorDataTask = new AsyncTask<Integer, Integer, String>() {
+            Boolean running = true;
+            Boolean wateringReasoning = false;
 
             @Override
             protected String doInBackground(Integer... params) {
@@ -116,66 +124,141 @@ public class FarmActivity extends AppCompatActivity {
                 return temperatur;
                 */
 
-                int i = 0;
-                while (i <= 50) {
-                    test = run("./iot_project/test.py");
+                while (running) {
+                    moist = run(RPI_SCRIPT_PATH + "moist");
+                    temp = run(RPI_SCRIPT_PATH + "temp");
+                    ph = run(RPI_SCRIPT_PATH + "ph");
+
+                    wateringReasoning = Boolean.parseBoolean(run(RPI_SCRIPT_PATH + moist + " " + temp + " " + ph).toLowerCase());
+
+                    publishProgress();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    publishProgress(i);
                 }
 
-                System.out.println(test);
-                return test;
+                return null; //test - var return temp innan
             }
-
 
 
             @Override
-            protected void onProgressUpdate(Integer...  values) {
-               // super.onProgressUpdate(values);
-                temperatureValue.setText(test);
-                System.out.println(test);
+            protected void onProgressUpdate(Integer... values) {
+                // super.onProgressUpdate(values);
 
+                moistureValue.setText(moist);
+                System.out.println(moist);
+
+                temperatureValue.setText(temp);
+                System.out.println(temp);
+
+                phValue.setText(ph);
+                System.out.println(ph);
+
+
+                System.out.println("result boolean: " + wateringReasoning);
+                if (checkAutomaticStatus())
+                    startWatering(wateringReasoning);
             }
 
             protected void onPostExecute(String result) {
-                temperatureValue.setText(result);
+                moistureValue.setText(moist);
+                temperatureValue.setText(temp);
+                phValue.setText(ph);
             }
 
         }.execute(1);
 
+       /* AsyncTask<Integer, Integer, String> phTask = new AsyncTask<Integer, Integer, String>() {
+            Boolean running = true;
+
+            @Override
+            protected String doInBackground(Integer... params) {
+
+                while (running) {
+                    ph = run(RPI_SCRIPT_PATH + "ph");
+                    publishProgress();
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println(ph);
+                return ph;
+            }
+
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                // super.onProgressUpdate(values);
+                phValue.setText(ph);
+                System.out.println(ph);
+            }
+
+            protected void onPostExecute(String result) {
+                phValue.setText(ph);
+            }
+
+        }.execute(1);*/
     }
 
+    class ActuatorOnTask extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... params) {
+            run("tdtool --on 1");
+            return null;
+        }
+    }
+
+    class ActuatorOffTask extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... params) {
+            run("tdtool --off 1");
+            return null;
+        }
+    }
 
     void startWatering(boolean b) {
         if (b) {
             watering = true;
             status.setText(R.string.tv_watering_status_show_on);
             statusButton.setText(R.string.tv_watering_button_show_on);
-            new AsyncTask<Integer, Void, Void>() {
-                @Override
-                protected Void doInBackground(Integer... params) {
-                    run("tdtool --on 1");
-                    return null;
-                }
 
-            }.execute(1);
+            ActuatorOnTask wateringOnTask = new ActuatorOnTask();
+            wateringOnTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+//            new AsyncTask<Integer, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Integer... params) {
+//                    run("tdtool --on 1");
+//                    return null;
+//                }
+//
+//            }.execute(1);
         } else {
             watering = false;
             status.setText(R.string.tv_watering_status_show_off);
             statusButton.setText(R.string.tv_watering_button_show_off);
-            new AsyncTask<Integer, Void, Void>() {
-                @Override
-                protected Void doInBackground(Integer... params) {
-                    run("tdtool --off 1");
-                    return null;
-                }
 
-            }.execute(1);
+            ActuatorOffTask wateringOffTask = new ActuatorOffTask();
+            wateringOffTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+//            new AsyncTask<Integer, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Integer... params) {
+//                    run("tdtool --off 1");
+//                    return null;
+//                }
+//
+//            }.execute(1);
         }
+    }
+
+    boolean checkAutomaticStatus() {
+        return autoSwitch.isChecked();
     }
 
     void checkMoisture() {
@@ -188,10 +271,10 @@ public class FarmActivity extends AppCompatActivity {
     }
 
     public String run(String command) {
-       // String strBuild = new StringBuilder();
+        // String strBuild = new StringBuilder();
         String strBuild = "";
 
-        String hostname = "169.254.224.24";
+        String hostname = "192.168.1.10"; //169.254.224.24
         String username = "pi";
         String password = "raspberry";
 
