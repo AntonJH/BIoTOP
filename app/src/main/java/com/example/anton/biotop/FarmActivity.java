@@ -30,6 +30,7 @@ public class FarmActivity extends AppCompatActivity {
     String ph;
 
     private static final String RPI_SCRIPT_PATH = "./iot_project/test.py ";
+    boolean running = true;
 
     /*
     @Override
@@ -106,7 +107,6 @@ public class FarmActivity extends AppCompatActivity {
 */
 
         AsyncTask<Integer, Integer, String> sensorDataTask = new AsyncTask<Integer, Integer, String>() {
-            Boolean running = true;
             Boolean wateringReasoning = false;
 
             @Override
@@ -142,7 +142,6 @@ public class FarmActivity extends AppCompatActivity {
                 return null; //test - var return temp innan
             }
 
-
             @Override
             protected void onProgressUpdate(Integer... values) {
                 // super.onProgressUpdate(values);
@@ -169,7 +168,24 @@ public class FarmActivity extends AppCompatActivity {
             }
 
         }.execute(1);
+    }
 
+    protected void onPause() {
+        super.onPause();
+        System.out.println("Pause");
+    }
+
+    protected void onStop() {
+        super.onStop();
+        System.out.println("Stop");
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        running = false;
+        System.out.println("Destroy");
+
+    }
        /* AsyncTask<Integer, Integer, String> phTask = new AsyncTask<Integer, Integer, String>() {
             Boolean running = true;
 
@@ -203,7 +219,7 @@ public class FarmActivity extends AppCompatActivity {
             }
 
         }.execute(1);*/
-    }
+
 
     class ActuatorOnTask extends AsyncTask<Integer, Void, Void> {
         @Override
@@ -271,7 +287,7 @@ public class FarmActivity extends AppCompatActivity {
     }
 
     public String run(String command) {
-        // String strBuild = new StringBuilder();
+       // String strBuild = new StringBuilder();
         String strBuild = "";
 
         String hostname = "192.168.1.10"; //169.254.224.24
@@ -301,6 +317,7 @@ public class FarmActivity extends AppCompatActivity {
                 System.out.println(line);
             }
             */
+
             strBuild = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
