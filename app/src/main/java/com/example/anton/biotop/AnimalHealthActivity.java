@@ -16,7 +16,6 @@ public class AnimalHealthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_health);
         getIncomingIntent();
-
     }
 
     private void getIncomingIntent() {
