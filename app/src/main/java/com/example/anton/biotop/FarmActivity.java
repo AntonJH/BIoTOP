@@ -20,10 +20,9 @@ import ch.ethz.ssh2.StreamGobbler;
 
 public class FarmActivity extends AppCompatActivity {
     TextView moistureValue, temperatureValue, phValue, status;
-    Button statusButton, upButton, downButton;
+    Button statusButton;
     Switch autoSwitch;
     boolean watering = false;
-    int n = 0;
 
     String moist;
     String temp;
@@ -59,26 +58,6 @@ public class FarmActivity extends AppCompatActivity {
         status = (TextView) findViewById(R.id.wateringStatusShow);
         autoSwitch = (Switch) findViewById(R.id.automaticSwitch);
         statusButton = (Button) findViewById(R.id.waterButton);
-        upButton = (Button) findViewById(R.id.buttonUp);
-        downButton = (Button) findViewById(R.id.buttonDown);
-
-        upButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                n++;
-                moistureValue.setText(n + "");
-                checkMoisture();
-            }
-        });
-
-        downButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                n--;
-                moistureValue.setText(n + "");
-                checkMoisture();
-            }
-        });
 
         statusButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,15 +261,6 @@ public class FarmActivity extends AppCompatActivity {
 
     boolean checkAutomaticStatus() {
         return autoSwitch.isChecked();
-    }
-
-    void checkMoisture() {
-        if (autoSwitch.isChecked()) {
-            if (n < 10)
-                startWatering(true);
-            else
-                startWatering(false);
-        }
     }
 
     public String run(String command) {
