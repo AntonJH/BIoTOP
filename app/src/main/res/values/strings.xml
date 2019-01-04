@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">BIoTOP</string>
     <string name="tv_farm">Odling</string>
+    <string name="tv_animal">Djur</string>
+
     <string name="tv_values">Värden</string>
     <string name="tv_moisture">Fukthalt</string>
-    <string name="tv_moisture_show">0</string>
+    <string name="tv_moisture_show">--</string>
     <string name="tv_temperature">Temperatur</string>
-    <string name="tv_temperature_show">-- --</string>
+    <string name="tv_temperature_show">--</string>
     <string name="tv_watering_title">Besprutning</string>
     <string name="tv_watering_option">Automatisk</string>
     <string name="tv_watering_status">Status</string>
@@ -13,7 +15,18 @@
     <string name="tv_watering_status_show_on">On</string>
     <string name="tv_watering_button_show_off">Starta</string>
     <string name="tv_watering_button_show_on">Avbryt</string>
-    <string name="tv_animal">Djur</string>
+
     <string name="tv_position">Position</string>
     <string name="tv_list">Lista</string>
+    <string name="tv_id">ID</string>
+    <string name="tv_health">Hälsa</string>
+
+    <string name="tv_body_temperature">Kroppstemperatur</string>
+    <string name="tv_body_temperature_show">--</string>
+    <string name="tv_pulse">Puls</string>
+    <string name="tv_pulse_show">--</string>
+    <string name="tv_blood_pressure">Bloodtryck</string>
+    <string name="tv_blood_pressure_show">--</string>
+
+
 </resources>

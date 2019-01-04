@@ -18,8 +18,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-            id = (TextView) view.findViewById(R.id.id);
-            health = (TextView) view.findViewById(R.id.health);
+            id = (TextView) view.findViewById(R.id.list_id);
+            health = (TextView) view.findViewById(R.id.list_health);
             view.setOnClickListener(this);
         }
 

@@ -26,7 +26,11 @@
             android:name=".AnimalActivity"
             android:label="@string/tv_animal"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AnimalHealthActivity"></activity>
+        <activity
+            android:name=".AnimalHealthActivity"
+            android:label="@string/tv_health"
+            android:parentActivityName=".AnimalActivity"
+            ></activity>
     </application>
 
 </manifest>

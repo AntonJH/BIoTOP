@@ -37,25 +37,11 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     }
 
     private void prepareAnimalData() {
-        Animal animal = new Animal("000", "Good");
+        Animal animal = new Animal("000");
         animalList.add(animal);
-        animal = new Animal("001", "Good");
+        animal = new Animal("001");
         animalList.add(animal);
-        animal = new Animal("002", "OK");
-        animalList.add(animal);
-        animal = new Animal("003", "Good");
-        animalList.add(animal);
-        animal = new Animal("004", "Bad");
-        animalList.add(animal);
-        animal = new Animal("005", "OK");
-        animalList.add(animal);
-        animal = new Animal("006", "Good");
-        animalList.add(animal);
-        animal = new Animal("007", "Good");
-        animalList.add(animal);
-        animal = new Animal("008", "Good");
-        animalList.add(animal);
-        animal = new Animal("009", "OK");
+        animal = new Animal("002");
         animalList.add(animal);
 
         animalAdapter.notifyDataSetChanged();
@@ -63,12 +49,22 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
 
     @Override
     public void onItemClick(View view, int position) {
+
+
+
         Toast.makeText(this, "You clicked " + animalAdapter.getItem(position).getID() + " with health: " + animalAdapter.getItem(position).getHealth(), Toast.LENGTH_SHORT).show();
 
-        /*
+
         Intent intent = new Intent(this, AnimalHealthActivity.class);
-        intent.putExtra("id", position);
+        intent.putExtra("id", animalAdapter.getItem(position).getID());
+        intent.putExtra("health", animalAdapter.getItem(position).getHealth());
         startActivity(intent);
-    */
+
+
+    }
+
+    public void openAnimalHealthActivity() {
+        Intent intent = new Intent(this, AnimalHealthActivity.class);
+        startActivity(intent);
     }
 }
