@@ -29,7 +29,7 @@ public class FarmActivity extends AppCompatActivity {
     String temp;
     String ph;
 
-    private static final String RPI_SCRIPT_PATH = "./iot_project/test.py ";
+    private static final String RPI_SCRIPT_PATH = "./iot_project/farm.py ";
     boolean running = true;
 
     /*
@@ -146,13 +146,14 @@ public class FarmActivity extends AppCompatActivity {
             protected void onProgressUpdate(Integer... values) {
                 // super.onProgressUpdate(values);
 
-                moistureValue.setText(moist);
+
+                moistureValue.setText(moist + " %");
                 System.out.println(moist);
 
-                temperatureValue.setText(temp);
+                temperatureValue.setText(decimalTrim(temp) + " °C");
                 System.out.println(temp);
 
-                phValue.setText(ph);
+                phValue.setText(decimalTrim(ph));
                 System.out.println(ph);
 
 
@@ -163,11 +164,17 @@ public class FarmActivity extends AppCompatActivity {
 
             protected void onPostExecute(String result) {
                 moistureValue.setText(moist);
-                temperatureValue.setText(temp);
-                phValue.setText(ph);
+                temperatureValue.setText(decimalTrim(temp));
+                phValue.setText(decimalTrim(ph));
             }
 
         }.execute(1);
+    }
+
+    String decimalTrim(String floatValue) {
+        if (floatValue.charAt(1) == '.')
+            return floatValue.substring(0, 3);
+        return floatValue.substring(0, 4);
     }
 
     protected void onPause() {
@@ -321,8 +328,8 @@ public class FarmActivity extends AppCompatActivity {
             strBuild = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
-            ses.close(); // Close this session
-            con.close();
+            // ses.close(); // Close this session
+            // con.close();
         } catch (IOException e) {
             e.printStackTrace(System.err);
             System.exit(2);
