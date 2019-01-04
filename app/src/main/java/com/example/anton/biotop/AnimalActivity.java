@@ -50,21 +50,11 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     @Override
     public void onItemClick(View view, int position) {
 
-
-
-        Toast.makeText(this, "You clicked " + animalAdapter.getItem(position).getID() + " with health: " + animalAdapter.getItem(position).getHealth(), Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, "Du valde " + animalAdapter.getItem(position).getID() + " med hälsa: " + animalAdapter.getItem(position).getHealth(), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, AnimalHealthActivity.class);
         intent.putExtra("id", animalAdapter.getItem(position).getID());
         intent.putExtra("health", animalAdapter.getItem(position).getHealth());
-        startActivity(intent);
-
-
-    }
-
-    public void openAnimalHealthActivity() {
-        Intent intent = new Intent(this, AnimalHealthActivity.class);
         startActivity(intent);
     }
 }

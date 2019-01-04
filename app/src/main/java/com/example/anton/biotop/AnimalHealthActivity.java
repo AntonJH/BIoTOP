@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class AnimalHealthActivity extends AppCompatActivity {
-
-   // Bundle b = getIntent().getExtras();
-   // int i = b.getInt("id");
-
-   // TextView id = (TextView) findViewById(R.id.test1);
+    private TextView idTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +23,8 @@ public class AnimalHealthActivity extends AppCompatActivity {
     }
 
     private void setView(String id, String health) {
-    TextView title = findViewById(R.id.id);
-    title.setText(id);
+    idTitle = findViewById(R.id.id);
+    idTitle.setText(id);
     TextView healthShow = findViewById(R.id.body_temperature_show);
     healthShow.setText(health);
     }

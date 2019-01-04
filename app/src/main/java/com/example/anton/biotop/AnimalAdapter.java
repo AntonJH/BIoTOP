@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.List;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
-
     private List<Animal> animalList;
     private ItemClickListener mClickListener;
 

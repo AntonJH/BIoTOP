@@ -40,7 +40,7 @@
             android:layout_marginRight="20dp"
             android:gravity="end"
             android:padding="5dip"
-            android:text="@string/tv_moisture_show"
+            android:text="@string/tv_dash"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
             android:layout_marginRight="20dp"
             android:gravity="end"
             android:padding="5dip"
-            android:text="-- --"
+            android:text="@string/tv_dash"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -90,7 +90,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:padding="5dip"
-            android:text="pH"
+            android:text="@string/tv_ph"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -102,7 +102,7 @@
             android:layout_marginRight="20dp"
             android:gravity="end"
             android:padding="5dip"
-            android:text="-- --"
+            android:text="@string/tv_dash"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -178,7 +178,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="5dip">
@@ -188,21 +188,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_watering_button_show_off"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="öka" />
-
-    <Button
-        android:id="@+id/buttonDown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="minska" />
-
 
 </LinearLayout>
