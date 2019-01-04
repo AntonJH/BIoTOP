@@ -1,14 +1,19 @@
 package com.example.anton.biotop;
 
 public class Animal {
-    String id, health;
+    String id, type;
 
-    public Animal(String id) {
+    public Animal(String id, String type) {
         this.id = id;
+        this.type = type;
     }
 
     public String getID() {
         return id;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getHealth() {

@@ -20,11 +20,13 @@
     <string name="tv_id">ID</string>
     <string name="tv_health">Hälsa</string>
 
+    <string name="tv_animal_type">Typ</string>
+    <string name="tv_animal_id">ID</string>
     <string name="tv_body_temperature">Kroppstemperatur</string>
     <string name="tv_pulse">Puls</string>
     <string name="tv_blood_pressure">Bloodtryck</string>
 
-    <string name="tv_dash">--</string>
+    <string name="tv_dash">-</string>
 
 
 </resources>

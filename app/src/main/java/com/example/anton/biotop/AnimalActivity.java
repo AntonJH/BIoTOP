@@ -37,11 +37,11 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     }
 
     private void prepareAnimalData() {
-        Animal animal = new Animal("000");
+        Animal animal = new Animal("000", "Ko");
         animalList.add(animal);
-        animal = new Animal("001");
+        animal = new Animal("001", "Ko");
         animalList.add(animal);
-        animal = new Animal("002");
+        animal = new Animal("002", "Ko");
         animalList.add(animal);
 
         animalAdapter.notifyDataSetChanged();
@@ -54,7 +54,7 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
 
         Intent intent = new Intent(this, AnimalHealthActivity.class);
         intent.putExtra("id", animalAdapter.getItem(position).getID());
-        intent.putExtra("health", animalAdapter.getItem(position).getHealth());
+        intent.putExtra("type", animalAdapter.getItem(position).getType());
         startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class AnimalHealthActivity extends AppCompatActivity {
-    private TextView idTitle;
+    private TextView animalType, animalID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,18 +15,18 @@ public class AnimalHealthActivity extends AppCompatActivity {
     }
 
     private void getIncomingIntent() {
-        if (getIntent().hasExtra("id") && getIntent().hasExtra("health")) {
+        if (getIntent().hasExtra("id") && getIntent().hasExtra("type")) {
             String id = getIntent().getStringExtra("id");
-            String health = getIntent().getStringExtra("health");
-            setView(id, health);
+            String type = getIntent().getStringExtra("type");
+            setView(id, type);
         }
     }
 
-    private void setView(String id, String health) {
-    idTitle = findViewById(R.id.id);
-    idTitle.setText(id);
-    TextView healthShow = findViewById(R.id.body_temperature_show);
-    healthShow.setText(health);
+    private void setView(String id, String type) {
+        animalType = findViewById(R.id.animal_type);
+        animalType.setText(type);
+        animalID = findViewById(R.id.animal_id);
+        animalID.setText(id);
     }
 }
 
