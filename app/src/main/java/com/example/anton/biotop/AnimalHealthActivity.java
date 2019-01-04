@@ -15,9 +15,7 @@ public class AnimalHealthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_health);
-
         getIncomingIntent();
-        //id.setText(i + "");
 
     }
 
@@ -25,17 +23,16 @@ public class AnimalHealthActivity extends AppCompatActivity {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("health")) {
             String id = getIntent().getStringExtra("id");
             String health = getIntent().getStringExtra("health");
-
-            setImage(id, health);
+            setView(id, health);
         }
     }
 
-    private void setImage(String id, String health) {
+    private void setView(String id, String health) {
     TextView title = findViewById(R.id.id);
     title.setText(id);
     TextView healthShow = findViewById(R.id.body_temperature_show);
     healthShow.setText(health);
-}
+    }
 }
 
 /*
