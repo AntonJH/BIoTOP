@@ -1,5 +1,6 @@
 package com.example.anton.biotop;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -142,8 +143,8 @@ public class FarmActivity extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
-                moistureValue.setText(moist);
-                temperatureValue.setText(decimalTrim(temp));
+                moistureValue.setText(moist + " %");
+                temperatureValue.setText(decimalTrim(temp) + " °C");
                 phValue.setText(decimalTrim(ph));
             }
 
@@ -227,6 +228,7 @@ public class FarmActivity extends AppCompatActivity {
         if (b) {
             watering = true;
             status.setText(R.string.tv_watering_status_show_on);
+            status.setTextColor(Color.GREEN);
             statusButton.setText(R.string.tv_watering_button_show_on);
 
             ActuatorOnTask wateringOnTask = new ActuatorOnTask();
@@ -243,6 +245,7 @@ public class FarmActivity extends AppCompatActivity {
         } else {
             watering = false;
             status.setText(R.string.tv_watering_status_show_off);
+            status.setTextColor(Color.RED);
             statusButton.setText(R.string.tv_watering_button_show_off);
 
             ActuatorOffTask wateringOffTask = new ActuatorOffTask();
