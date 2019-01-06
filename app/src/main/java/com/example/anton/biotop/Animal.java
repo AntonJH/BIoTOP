@@ -18,10 +18,10 @@ public class Animal {
 
     public String getHealth() {
         if (id.equals("001"))
-            return "bra";
+            return "POSITIV";
         else if (id.equals("002"))
-            return "ok";
+            return "RISK";
         else
-            return "ush";
+            return "NEGATIV";
     }
 }

@@ -39,9 +39,9 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     private void prepareAnimalData() {
         Animal animal = new Animal("000", "Ko");
         animalList.add(animal);
-        animal = new Animal("001", "Ko");
+        animal = new Animal("001", "Häst");
         animalList.add(animal);
-        animal = new Animal("002", "Ko");
+        animal = new Animal("002", "Får");
         animalList.add(animal);
 
         animalAdapter.notifyDataSetChanged();
