@@ -1,16 +1,22 @@
 package com.example.anton.biotop;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
@@ -19,7 +25,10 @@ import ch.ethz.ssh2.StreamGobbler;
 public class AnimalHealthActivity extends AppCompatActivity {
     private TextView animalType, animalID, bodyTempValue, pulseValue, pressureValue, statusValue, statusDescValue;
 
-    private String temp, pulse, bloodPressureSystolic, bloodPressureDiastolic;
+    private String temp, pulse, bloodPressureSystolic, bloodPressureDiastolic, healthStatus;
+    StringBuilder healthDesc = new StringBuilder();
+
+    private List<Animal> animalList = new ArrayList<>();
 
     private static final String RPI_SCRIPT_PATH = "./iot_project/animal.py ";
     boolean running = true;
@@ -28,24 +37,40 @@ public class AnimalHealthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_health);
-        getIncomingIntent();
 
         bodyTempValue = (TextView) findViewById(R.id.body_temperature_show);
         pulseValue = (TextView) findViewById(R.id.pulse_show);
         pressureValue = (TextView) findViewById(R.id.blood_pressure_show);
         statusValue = (TextView) findViewById(R.id.animal_status_show);
         statusDescValue = (TextView) findViewById(R.id.animal_status_desc);
+        healthDesc = new StringBuilder();
+
+        getIncomingIntent();
 
         AsyncTask<Integer, Integer, String> sensorDataTask = new AsyncTask<Integer, Integer, String>() {
-            String healthStatus = "";
-            StringBuilder healthDesc = new StringBuilder();
-
             @Override
             protected String doInBackground(Integer... params) {
                 while (running) {
-                    temp = run(RPI_SCRIPT_PATH + "temp");
-                    pulse = run(RPI_SCRIPT_PATH + "pulse");
-                    String bloodPressure = run(RPI_SCRIPT_PATH + "pressure");
+                    if (running) {
+                        temp = run(RPI_SCRIPT_PATH + "temp");
+                    } else {
+                        break;
+                    }
+
+
+                    if (running) {
+                        pulse = run(RPI_SCRIPT_PATH + "pulse");
+                    } else {
+                        break;
+                    }
+
+
+                    String bloodPressure = "";
+                    if (running) {
+                        bloodPressure = run(RPI_SCRIPT_PATH + "pressure");
+                    } else {
+                        break;
+                    }
 
                     String[] bloodPressureTypes = bloodPressure.split(" ");
                     bloodPressureSystolic = bloodPressureTypes[0];
@@ -69,14 +94,14 @@ public class AnimalHealthActivity extends AppCompatActivity {
                         healthDesc = healthDesc.append("- " + reasoningData[i] + "\n");
                     }
 
-                    publishProgress();
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if (running) {
+                        publishProgress();
+                    } else {
+                        break;
                     }
-                }
 
+                    SystemClock.sleep(5000);
+                }
                 return null;
             }
 
@@ -105,18 +130,22 @@ public class AnimalHealthActivity extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
-                bodyTempValue.setText(decimalTrim(temp) + " °C");
-                pulseValue.setText(pulse + " BPM");
-                pressureValue.setText(bloodPressureSystolic + "/" + bloodPressureDiastolic + " mm Hg");
-                statusValue.setText(healthStatus);
-                if (healthStatus.equals("POSITIV")) {
-                    statusValue.setTextColor(Color.GREEN);
-                } else if (healthStatus.equals("RISK")) {
-                    statusValue.setTextColor(Color.YELLOW);
-                } else {
-                    statusValue.setTextColor(Color.RED);
+                try {
+                    bodyTempValue.setText(decimalTrim(temp) + " °C");
+                    pulseValue.setText(pulse + " BPM");
+                    pressureValue.setText(bloodPressureSystolic + "/" + bloodPressureDiastolic + " mm Hg");
+                    statusValue.setText(healthStatus);
+                    if (healthStatus.equals("POSITIV")) {
+                        statusValue.setTextColor(Color.GREEN);
+                    } else if (healthStatus.equals("RISK")) {
+                        statusValue.setTextColor(Color.YELLOW);
+                    } else {
+                        statusValue.setTextColor(Color.RED);
+                    }
+                    statusDescValue.setText(healthDesc);
+                } catch (NullPointerException e) {
+                    System.out.println("Null varning.");
                 }
-                statusDescValue.setText(healthDesc);
             }
 
         }.execute(1);
@@ -130,39 +159,102 @@ public class AnimalHealthActivity extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
+        finish();
         System.out.println("Pause");
+        running = false;
     }
 
     protected void onStop() {
         super.onStop();
         System.out.println("Stop");
+        running = false;
     }
 
     protected void onDestroy() {
         super.onDestroy();
         running = false;
         System.out.println("Destroy");
+    }
 
+    Intent createIntent() {
+        Intent intent = new Intent(this, AnimalActivity.class);
+        intent.putExtra("status", statusValue.getText());
+        intent.putExtra("id", animalID.getText());
+        intent.putExtra("temp", temp);
+        intent.putExtra("pulse", pulse);
+        intent.putExtra("pressureS", bloodPressureSystolic);
+        intent.putExtra("pressureD", bloodPressureDiastolic);
+        intent.putExtra("desc", healthDesc.toString());
+        intent.putExtra("list", (Serializable) animalList);
+
+        return intent;
+    }
+
+    @Override
+    public void onBackPressed() {
+        running = false;
+        startActivity(createIntent());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                running = false;
+                startActivity(createIntent());
+
+                return(true);
+        }
+
+        return(super.onOptionsItemSelected(item));
     }
 
     private void getIncomingIntent() {
-        if (getIntent().hasExtra("id") && getIntent().hasExtra("type")) {
+        if (getIntent().hasExtra("id") && getIntent().hasExtra("type") && getIntent().hasExtra("status")) {
             String id = getIntent().getStringExtra("id");
             String type = getIntent().getStringExtra("type");
-            setView(id, type);
+            String status = getIntent().getStringExtra("status");
+
+            temp = getIntent().getStringExtra("temp");
+            pulse = getIntent().getStringExtra("pulse");
+            bloodPressureSystolic = getIntent().getStringExtra("pressureS");
+            bloodPressureDiastolic = getIntent().getStringExtra("pressureD");
+
+            healthDesc.setLength(0);
+            healthDesc.append(getIntent().getStringExtra("desc"));
+
+            animalList = (List<Animal>) getIntent().getSerializableExtra("list");
+
+            setView(id, type, status);
         }
     }
 
-    private void setView(String id, String type) {
+    private void setView(String id, String type, String status) {
         animalType = findViewById(R.id.animal_type);
         animalType.setText(type);
         animalID = findViewById(R.id.animal_id);
         animalID.setText(id);
+
+        bodyTempValue.setText(decimalTrim(temp) + " °C");
+        pulseValue.setText(pulse + " BPM");
+        pressureValue.setText(bloodPressureSystolic + "/" + bloodPressureDiastolic + " mm Hg");
+        statusDescValue.setText(healthDesc);
+
+
+        if (status.equals("POSITIV")) {
+            statusValue.setTextColor(Color.GREEN);
+        } else if (status.equals("RISK")) {
+            statusValue.setTextColor(Color.YELLOW);
+        } else {
+            statusValue.setTextColor(Color.RED);
+        }
+
+        statusValue.setText(status);
     }
 
     public String run(String command) {
         // String strBuild = new StringBuilder();
-        String strBuild = "";
+        String str = "";
 
         String hostname = "192.168.1.10"; //169.254.224.24
         String username = "pi";
@@ -192,7 +284,7 @@ public class AnimalHealthActivity extends AppCompatActivity {
             }
             */
 
-            strBuild = br.readLine();
+            str = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
             // ses.close(); // Close this session
@@ -201,150 +293,6 @@ public class AnimalHealthActivity extends AppCompatActivity {
             e.printStackTrace(System.err);
             System.exit(2);
         }
-        return strBuild;
+        return str;
     }
 }
-
-/*
-
-package com.example.anhu6690.iotlab2app;
-
-import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-
-import ch.ethz.ssh2.Connection;
-import ch.ethz.ssh2.Session;
-import ch.ethz.ssh2.StreamGobbler;
-
-public class MainActivity extends AppCompatActivity {
-
-    TextView txv_temp_indoor = null;
-    TextView txv_outdoor_light_on_temp = null;
-    Switch btnToggle = null;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        txv_temp_indoor = (TextView) findViewById(R.id.indoorTempShow);
-
-        btnToggle = (Switch) findViewById(R.id.btnToggle);
-
-        txv_outdoor_light_on_temp = (TextView) findViewById(R.id.outdoorLightShow);
-
-        btnToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) { //do something if checked
-                    new AsyncTask<Integer, Void, Void>(){
-                        @Override
-                        protected Void doInBackground(Integer... params)
-                        {
-                            run("tdtool --on 1");
-                            return null;
-                        }
-
-                    }.execute(1);
-
-                    txv_outdoor_light_on_temp.setText(R.string.txv_outdoor_light_on);
-                } else { // to do something if not checked
-                    new AsyncTask<Integer, Void, Void>(){
-                        @Override
-                        protected Void doInBackground(Integer... params)
-                        {
-                            run("tdtool --off 1");
-                            return null;
-                        }
-
-                    }.execute(1);
-                }
-            }
-        });
-
-
-        new AsyncTask<Integer, Void, String>(){
-            @Override
-            protected String doInBackground(Integer... params)
-            {
-                //your code to fetch results via SSH
-                StringBuilder strngBuild = run("tdtool -l");
-
-
-                String[] tempData = strngBuild.toString().trim().split("\\n");
-                for (int i = 0; i < tempData.length; i++) {
-                    System.out.println("Array: " + tempData[i].toString());
-                }
-
-                String[] rad = tempData[7].split("\t");
-                String temperatur = rad[3];
-
-                return temperatur;
-            }
-
-            protected void onPostExecute(String result) {
-                txv_temp_indoor.setText(result);
-            }
-
-        }.execute(1);
-
-    }
-
-
-    public StringBuilder run(String command) {
-        StringBuilder strgBuild = new StringBuilder();
-
-        String hostname = "130.237.177.214";
-        String username = "pi";
-        String password = "raspberry";
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            Connection conn = new Connection(hostname); //init connection
-            conn.connect(); //start connection to the hostname
-            boolean isAuthenticated = conn.authenticateWithPassword(username, password);
-            if (isAuthenticated == false)
-                throw new IOException("Authentication failed.");
-            Session sess = conn.openSession();
-            sess.execCommand(command);
-            InputStream stdout = new StreamGobbler(sess.getStdout());
-            BufferedReader br = new BufferedReader(new InputStreamReader(stdout)); //reads text
-
-
-            while (true) {
-                String line = br.readLine(); // read line
-                if (line == null)
-                    break;
-                strgBuild.append(line + "\n");
-                System.out.println(line);
-            }
-*/
-
-            /*
-            Show exit status, if available (otherwise "null")
-            System.out.println("ExitCode: " + sess.getExitStatus());
-                    sess.close(); // Close this session
-                    conn.close();
-                    } catch (IOException e) {
-                    e.printStackTrace(System.err);
-                    System.exit(2);
-                    }
-                    return strgBuild;
-                    }
-
-
-                    }
- */

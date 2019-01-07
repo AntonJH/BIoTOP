@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    private List<Animal> animalList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                 openAnimalActivity();
             }
         });
+
+        if (getIntent().hasExtra("list")) {
+            animalList = (List<Animal>) getIntent().getSerializableExtra("list");
+
+            System.out.println("lista: " + animalList);
+        }
     }
 
     public void openFarmActivity() {
@@ -37,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAnimalActivity() {
         Intent intent = new Intent(this, AnimalActivity.class);
+        if (animalList != null || !animalList.isEmpty()) {
+            intent.putExtra("list", (Serializable) animalList);
+        }
         startActivity(intent);
     }
+
+//    Intent createIntent() {
+//            Intent intent = new Intent(this, AnimalActivity.class);
+//            intent.putExtra("list", (Serializable) animalList);
+//
+//            return intent;
+//    }
 }
