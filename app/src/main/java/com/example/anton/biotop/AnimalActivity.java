@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -47,8 +46,6 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
         animalAdapter.setClickListener(this);
         recyclerView.setAdapter(animalAdapter);
 
-
-//        TextView statusText;
         if (getIntent().hasExtra("status") && getIntent().hasExtra("id") && getIntent().hasExtra("temp")) {
             String status = getIntent().getStringExtra("status");
             String id = getIntent().getStringExtra("id");
@@ -57,8 +54,6 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
             String pressureS = getIntent().getStringExtra("pressureS");
             String pressureD = getIntent().getStringExtra("pressureD");
             String healthDesc = getIntent().getStringExtra("desc");
-
-
 
             for (Animal animal : animalList) {
                 if (animal.getID().equals(id)) {
@@ -71,9 +66,6 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
                     animalAdapter.notifyDataSetChanged();
                 }
             }
-
-//            statusText = (TextView) findViewById(R.id.list_health);
-//            statusText.setText(status);
         } else if (animalList == null || animalList.isEmpty()) {
             prepareAnimalData();
         }
@@ -115,12 +107,6 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
         startActivity(intent);
     }
 
-//    protected void onStop() {
-//        super.onStop();
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra("list", (Serializable) animalList);
-//    }
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -138,7 +124,6 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
 
                 return(true);
         }
-
         return(super.onOptionsItemSelected(item));
     }
 }

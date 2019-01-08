@@ -253,7 +253,6 @@ public class AnimalHealthActivity extends AppCompatActivity {
     }
 
     public String run(String command) {
-        // String strBuild = new StringBuilder();
         String str = "";
 
         String hostname = "192.168.1.10"; //169.254.224.24
@@ -264,31 +263,19 @@ public class AnimalHealthActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            Connection con = new Connection(hostname); //init connection
-            con.connect(); //start connection to the hostname
+            Connection con = new Connection(hostname);
+            con.connect();
             boolean isAuthenticated = con.authenticateWithPassword(username, password);
             if (!isAuthenticated)
                 throw new IOException("Authentication failed.");
             Session ses = con.openSession();
             ses.execCommand(command);
             InputStream stdout = new StreamGobbler(ses.getStdout());
-            BufferedReader br = new BufferedReader(new InputStreamReader(stdout)); //reads text
-
-            /*
-            while (true) {
-                String line = br.readLine(); // read line
-                if (line == null)
-                    break;
-                strBuild.append(line + "\n");
-                System.out.println(line);
-            }
-            */
+            BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
 
             str = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
-            // ses.close(); // Close this session
-            // con.close();
         } catch (IOException e) {
             e.printStackTrace(System.err);
             System.exit(2);

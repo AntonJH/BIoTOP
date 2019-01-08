@@ -1,13 +1,11 @@
 package com.example.anton.biotop;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.content.Intent;
 
 import java.util.List;
 
@@ -65,17 +63,14 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         return animalList.size();
     }
 
-    // convenience method for getting data at click position
     Animal getItem(int id) {
         return animalList.get(id);
     }
 
-    // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

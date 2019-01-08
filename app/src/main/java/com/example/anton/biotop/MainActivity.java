@@ -53,11 +53,4 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
-
-//    Intent createIntent() {
-//            Intent intent = new Intent(this, AnimalActivity.class);
-//            intent.putExtra("list", (Serializable) animalList);
-//
-//            return intent;
-//    }
 }

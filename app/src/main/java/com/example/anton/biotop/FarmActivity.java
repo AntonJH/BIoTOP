@@ -32,25 +32,10 @@ public class FarmActivity extends AppCompatActivity {
     private static final String RPI_SCRIPT_PATH = "./iot_project/farm.py ";
     boolean running = true;
 
-    /*
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("temp", test);
-        super.onSaveInstanceState(outState);
-    }
-    */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        if (savedInstanceState != null) {
-            test = savedInstanceState.getString("temp");
-            temperatureValue.setText(test);
-        }
-
-        */
         setContentView(R.layout.activity_farm);
 
         moistureValue = (TextView) findViewById(R.id.moistureShow);
@@ -71,38 +56,12 @@ public class FarmActivity extends AppCompatActivity {
                     autoSwitch.setChecked(false);
             }
         });
-/*
-        auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    upButton.setEnabled(true);
-                    downButton.setEnabled(true);
-                } else {
-                    upButton.setEnabled(false);
-                    downButton.setEnabled(false);
-                }
-            }
-        });
-*/
 
         AsyncTask<Integer, Integer, String> sensorDataTask = new AsyncTask<Integer, Integer, String>() {
             Boolean wateringReasoning = false;
 
             @Override
             protected String doInBackground(Integer... params) {
-
-                /*
-                String[] tempData = strBuild.toString().trim().split("\\n");
-                for (int i = 0; i < tempData.length; i++) {
-                    System.out.println("Array: " + tempData[i].toString());
-                }
-
-                String[] rad = tempData[7].split("\t");
-                String temperatur = rad[3];
-
-                return temperatur;
-                */
 
                 while (running) {
                     moist = run(RPI_SCRIPT_PATH + "moist");
@@ -119,13 +78,11 @@ public class FarmActivity extends AppCompatActivity {
                     }
                 }
 
-                return null; //test - var return temp innan
+                return null;
             }
 
             @Override
             protected void onProgressUpdate(Integer... values) {
-                // super.onProgressUpdate(values);
-
 
                 moistureValue.setText(moist + " %");
                 System.out.println(moist);
@@ -173,40 +130,6 @@ public class FarmActivity extends AppCompatActivity {
         System.out.println("Destroy");
 
     }
-       /* AsyncTask<Integer, Integer, String> phTask = new AsyncTask<Integer, Integer, String>() {
-            Boolean running = true;
-
-            @Override
-            protected String doInBackground(Integer... params) {
-
-                while (running) {
-                    ph = run(RPI_SCRIPT_PATH + "ph");
-                    publishProgress();
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                System.out.println(ph);
-                return ph;
-            }
-
-
-            @Override
-            protected void onProgressUpdate(Integer... values) {
-                // super.onProgressUpdate(values);
-                phValue.setText(ph);
-                System.out.println(ph);
-            }
-
-            protected void onPostExecute(String result) {
-                phValue.setText(ph);
-            }
-
-        }.execute(1);*/
-
 
     class ActuatorOnTask extends AsyncTask<Integer, Void, Void> {
         @Override
@@ -233,15 +156,6 @@ public class FarmActivity extends AppCompatActivity {
 
             ActuatorOnTask wateringOnTask = new ActuatorOnTask();
             wateringOnTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-//            new AsyncTask<Integer, Void, Void>() {
-//                @Override
-//                protected Void doInBackground(Integer... params) {
-//                    run("tdtool --on 1");
-//                    return null;
-//                }
-//
-//            }.execute(1);
         } else {
             watering = false;
             status.setText(R.string.tv_watering_status_show_off);
@@ -250,15 +164,6 @@ public class FarmActivity extends AppCompatActivity {
 
             ActuatorOffTask wateringOffTask = new ActuatorOffTask();
             wateringOffTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-//            new AsyncTask<Integer, Void, Void>() {
-//                @Override
-//                protected Void doInBackground(Integer... params) {
-//                    run("tdtool --off 1");
-//                    return null;
-//                }
-//
-//            }.execute(1);
         }
     }
 
@@ -267,7 +172,6 @@ public class FarmActivity extends AppCompatActivity {
     }
 
     public String run(String command) {
-       // String strBuild = new StringBuilder();
         String strBuild = "";
 
         String hostname = "192.168.1.10"; //169.254.224.24
@@ -278,31 +182,20 @@ public class FarmActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            Connection con = new Connection(hostname); //init connection
-            con.connect(); //start connection to the hostname
+            Connection con = new Connection(hostname);
+            con.connect();
             boolean isAuthenticated = con.authenticateWithPassword(username, password);
             if (!isAuthenticated)
                 throw new IOException("Authentication failed.");
             Session ses = con.openSession();
             ses.execCommand(command);
             InputStream stdout = new StreamGobbler(ses.getStdout());
-            BufferedReader br = new BufferedReader(new InputStreamReader(stdout)); //reads text
-
-            /*
-            while (true) {
-                String line = br.readLine(); // read line
-                if (line == null)
-                    break;
-                strBuild.append(line + "\n");
-                System.out.println(line);
-            }
-            */
+            BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
 
             strBuild = br.readLine();
 
             System.out.println("ExitCode: " + ses.getExitStatus());
-            // ses.close(); // Close this session
-            // con.close();
+
         } catch (IOException e) {
             e.printStackTrace(System.err);
             System.exit(2);

@@ -70,13 +70,4 @@ public class Animal implements Serializable {
     public void setHealthDesc(String healthDesc) {
         this.healthDesc = healthDesc;
     }
-
-    //    public String getHealth() {
-//        if (id.equals("001"))
-//            return "POSITIV";
-//        else if (id.equals("002"))
-//            return "RISK";
-//        else
-//            return "NEGATIV";
-//    }
 }
