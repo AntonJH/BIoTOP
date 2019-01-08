@@ -7,7 +7,7 @@
     <string name="tv_moisture">Fukthalt</string>
     <string name="tv_temperature">Temperatur</string>
     <string name="tv_ph">pH</string>
-    <string name="tv_watering_title">Besprutning</string>
+    <string name="tv_watering_title">Bevattning</string>
     <string name="tv_watering_option">Automatisk</string>
     <string name="tv_watering_status">Status</string>
     <string name="tv_watering_status_show_off">Off</string>
