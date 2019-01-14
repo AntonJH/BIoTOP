@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/greenDark</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="android:fontFamily">@font/raleway_regular</item>
     </style>
 
 </resources>

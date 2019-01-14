@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_animal_type"
+            android:fontFamily="@font/raleway_extra_bold"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_dash"
+            android:fontFamily="@font/raleway_extra_bold"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_animal_id"
+            android:fontFamily="@font/raleway_extra_bold"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -53,6 +56,7 @@
             android:layout_marginLeft="20dp"
             android:padding="5dip"
             android:text="@string/tv_body_temperature"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -84,6 +88,7 @@
             android:layout_marginLeft="20dp"
             android:padding="5dip"
             android:text="@string/tv_pulse"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -115,6 +120,7 @@
             android:layout_marginLeft="20dp"
             android:padding="5dip"
             android:text="@string/tv_blood_pressure"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -156,6 +162,7 @@
             android:layout_marginLeft="20dp"
             android:padding="5dip"
             android:text="@string/tv_watering_status"
+            android:fontFamily="@font/raleway_extra_bold"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -180,6 +187,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="Description"
+        android:fontFamily="@font/raleway_regular"
         android:textSize="18sp" />
 
 </LinearLayout>

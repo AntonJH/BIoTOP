@@ -7,7 +7,9 @@
     <color name="text_box_background">#E7E7E7</color>
     <color name="blue">#0166ff</color>
     <color name="red">#eb164e</color>
-    <color name="activitybackground">#29c142</color>
+    <color name="activitybackground">#00a316</color>
     <color name="activityfont">#3f3f3f</color>
+    <color name="menuSelected">#000000</color>
+    <color name="menuNotSelected">#00570c</color>
 
 </resources>

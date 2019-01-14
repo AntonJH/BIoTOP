@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_farming"
+        android:icon="@drawable/ic_irrigation"
+        android:title="Odling"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_farmer"
+        android:title="Hem"/>
+
+    <item
+        android:id="@+id/navigation_animal"
+        android:icon="@drawable/ic_animal"
+        android:title="Djur"/>
+
+</menu>

@@ -2,11 +2,16 @@ package com.example.anton.biotop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -19,6 +24,8 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     private List<Animal> animalList;
     private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
+
+//    private ActionBar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +77,37 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
             prepareAnimalData();
         }
 
+        // Test av bottom navbar
+//        toolbar = getSupportActionBar();
+//        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+//        navigationView.setSelectedItemId(R.id.navigation_animal);
+//        navigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+//
+//        Menu menu = navigationView.getMenu();
+//        MenuItem menuItem = menu.getItem(2);
+//        menuItem.setChecked(true);
     }
+
+//    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+////        @Override
+////        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+////            Fragment fragment;
+////
+////            switch (menuItem.getItemId()) {
+////                case R.id.navigation_farming:
+//////                    openFarmActivity();
+////                    return true;
+////                case R.id.navigation_animal:
+////                    return true;
+////                case R.id.navigation_home:
+////                    Intent intent = new Intent(AnimalActivity.this, MainActivity.class);
+////                    intent.putExtra("list", (Serializable) animalList);
+////                    startActivity(intent);
+////                    return true;
+////            }
+////            return false;
+////        }
+////    };
 
     private void prepareAnimalData() {
         Animal animal = new Animal("000", "Ko", "NEGATIV", "44.000000000", "70", "130", "80");
