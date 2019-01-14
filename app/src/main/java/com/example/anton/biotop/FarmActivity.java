@@ -1,5 +1,6 @@
 package com.example.anton.biotop;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -14,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.List;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
@@ -24,6 +27,7 @@ public class FarmActivity extends AppCompatActivity {
     Button statusButton;
     Switch autoSwitch;
     boolean watering = false;
+    private List<Animal> animalList;
 
     String moist;
     String temp;
@@ -129,6 +133,12 @@ public class FarmActivity extends AppCompatActivity {
         running = false;
         System.out.println("Destroy");
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     class ActuatorOnTask extends AsyncTask<Integer, Void, Void> {

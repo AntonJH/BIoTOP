@@ -141,7 +141,7 @@
         android:padding="10dip"
         android:text="@string/tv_watering_title"
         android:fontFamily="@font/raleway_extra_bold"
-        android:textColor="@color/blue"
+        android:textColor="@color/black"
         android:textSize="30sp" />
 
     <LinearLayout
