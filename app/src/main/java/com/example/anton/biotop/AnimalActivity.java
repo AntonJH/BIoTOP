@@ -113,13 +113,13 @@ public class AnimalActivity extends AppCompatActivity implements AnimalAdapter.I
     private void prepareAnimalData() {
         Animal animal = new Animal("000", "Ko", "NEGATIV", "44.000000000", "70", "130", "80");
         animalList.add(animal);
-        animal.setHealthDesc("-Kroppstemperaturen är på allvarligt hög/låg nivå.\n-Pulsen är inom normal nivå.\n-Blodtrycket är inom normal nivå.");
+        animal.setHealthDesc("- Kroppstemperaturen är på allvarligt hög/låg nivå.\n- Pulsen är inom normal nivå.\n- Blodtrycket är inom normal nivå.");
         animal = new Animal("001", "Häst", "POSITIV", "37.20000000", "76", "120", "75");
         animalList.add(animal);
-        animal.setHealthDesc("-Kroppstemperaturen är inom normal nivå.\n-Pulsen är inom normal nivå.\n-Blodtrycket är inom normal nivå.");
+        animal.setHealthDesc("- Kroppstemperaturen är inom normal nivå.\n- Pulsen är inom normal nivå.\n- Blodtrycket är inom normal nivå.");
         animal = new Animal("002", "Får", "RISK","35.80000000", "62", "145", "99");
         animalList.add(animal);
-        animal.setHealthDesc("-Kroppstemperaturen är ej inom normal nivå.\n-Pulsen är inom normal nivå.\n-Blodtrycket är inom normal nivå.");
+        animal.setHealthDesc("- Kroppstemperaturen är ej inom normal nivå.\n- Pulsen är inom normal nivå.\n- Blodtrycket är inom normal nivå.");
 
         animalAdapter.notifyDataSetChanged();
     }
