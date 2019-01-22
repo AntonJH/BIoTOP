@@ -1,15 +1,11 @@
 package com.example.anton.biotop;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        SpannableString text = new SpannableString("BIoTOP");
-//        title = (TextView) findViewById(R.id.title);
-//        text.setSpan(new ForegroundColorSpan()), 0, , 0)
 
         Button buttonFarm = (Button) findViewById(R.id.buttonFarm);
         buttonFarm.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("lista: " + animalList);
         }
 
-        // Test av bottom navbar
         toolbar = getSupportActionBar();
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         navigationView.setSelectedItemId(R.id.navigation_home);
