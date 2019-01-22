@@ -255,7 +255,7 @@ public class AnimalHealthActivity extends AppCompatActivity {
     public String run(String command) {
         String str = "";
 
-        String hostname = "192.168.1.10"; //169.254.224.24
+        String hostname = "169.254.224.24"; // 192.168.1.10
         String username = "pi";
         String password = "raspberry";
 
